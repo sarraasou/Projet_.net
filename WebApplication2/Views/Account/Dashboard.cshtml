@@ -1,0 +1,186 @@
+﻿@model WebApplication2.Models.User
+
+@{
+    Layout = null; // Annule l'utilisation du layout
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!DOCTYPE html>
+<!-- Coding by CodingNepal | www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title> Responsiive Admin Dashboard | CodingLab </title>
+    <link rel="stylesheet" href="~/css/style2.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Style du titre */
+        h3 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: left;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        /* Style du tableau */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+            .table thead {
+                background-color: #4CAF50;
+                color: white;
+                text-align: left;
+            }
+
+            .table th, .table td {
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .table tbody tr:hover {
+                background-color: #ddd;
+            }
+
+        /* Général */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Style pour la section "home-content" */
+        .home-content {
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        /* Profil utilisateur */
+        .profile-details img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class='bx bxl-c-plus-plus'></i>
+            <span class="logo_name">CodingLab</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#" class="active">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-box'></i>
+                    <span class="links_name">Commande</span>
+                </a>
+            </li>
+
+            <li class="log_out">
+                <a href="#">
+                    <i class='bx bx-log-out'></i>
+                    <span class="links_name">Log out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <nav>
+            <div class="sidebar-button">
+                <i class='bx bx-menu sidebarBtn'></i>
+                <span class="dashboard">Dashboard</span>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <i class='bx bx-search'></i>
+            </div>
+            <div class="profile-details">
+                <img src="images/profile.jpg" alt="">
+                <span class="admin_name">Prem Shahi</span>
+                <i class='bx bx-chevron-down'></i>
+            </div>
+        </nav>
+
+        <div class="home-content">
+
+            <div>
+                <h3>User Profile</h3>
+                <p><strong>Name:</strong> @Model.Name</p>
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Phone:</strong> @Model.Phone</p>
+                <p><strong>Role:</strong> @Model.Role</p>
+            </div>
+
+            <div>
+                <h3>Orders</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Shipping Address</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td>@order.Id</td>
+                                <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                                <td>@order.ShippingAddress</td>
+                                <td>@order.TotalPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+           
+
+        </div>
+    </section>
+
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".sidebarBtn");
+        sidebarBtn.onclick = function () {
+            sidebar.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+            } else
+                sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+﻿@model WebApplication2.ViewModels.ListProduitViewModel
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+
+
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    <div class="sidebar__item">
+                        <h4>Department</h4>
+                        <ul>
+                            @if (Model.Categories != null && Model.Categories.Any())
+                            {
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <li><a href="#">@category.Name</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="sidebar__item">
+                        <div class="latest-product__text">
+                            <h4>Latest Products</h4>
+                            <div class="latest-product__slider owl-carousel">
+                                <div class="latest-product__slider__item">
+                                    @if (Model.Products != null && Model.Products.Any())
+                                    {
+                                        @foreach (var product in Model.Products.Take(3))
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="@Url.Content("~/img/product/" + product.ImageUrl)" alt="@product.Name">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@product.Name</h6>
+                                                    <span>@product.Price.ToString("C")</span>
+                                                </div>
+                                            </a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-7">
+ <div class="product__discount">
+                    <div class="section-title product__discount__title">
+                        <h2>Sale Off</h2>
+                    </div>
+                    <div class="row">
+                        <div class="product__discount__slider owl-carousel">
+                            @if (Model.Products != null && Model.Products.Any())
+                            {
+                                @foreach (var product in Model.Products.Take(3))
+                                {
+                                    <div class="col-lg-4">
+                                        <div class="product__discount__item">
+                                            <div class="product__discount__item__pic set-bg"
+                                                 data-setbg="@Url.Content("~/img/product/" + product.ImageUrl)">
+                                                <div class="product__discount__percent">-20%</div>
+                                                <ul class="product__item__pic__hover">
+                                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__discount__item__text">
+                                                <span>@product.Name</span>
+                                                <h5><a href="@Url.Action("ProduitDetails", "Home", new { id = product.Id })">@product.Name</a></h5>
+                                                <div class="product__item__price">@product.Price.ToString("C")<span>$36.00</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter__item">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="filter__sort">
+                                <span>Sort By</span>
+                                <select>
+                                    <option value="0">Default</option>
+                                    <option value="1">Price: Low to High</option>
+                                    <option value="2">Price: High to Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="filter__found">
+                                <h6><span>@Model.Products.Count()</span> Products found</h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3">
+                            <div class="filter__option">
+                                <span class="icon_grid-2x2"></span>
+                                <span class="icon_ul"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @if (Model.Products != null && Model.Products.Any())
+                    {
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="@Url.Content("~/img/product/" + product.ImageUrl)">
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="@Url.Action("ProduitDetails", "Home", new { id = product.Id })">@product.Name</a></h6>
+                                        <h5>@product.Price.ToString("C")</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="product__pagination">
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

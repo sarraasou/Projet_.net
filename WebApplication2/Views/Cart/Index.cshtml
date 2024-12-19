@@ -1,0 +1,84 @@
+﻿@model WebApplication2.ViewModels.CartViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Products</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cart in Model.Carts)
+                            {
+                                foreach (var item in cart.Items)
+                                {
+                                    <tr>
+                                        <td class="shoping__cart__item">
+                                            <img src="~/img/product/@item.Product.ImageUrl" alt="@item.Product.Name">
+                                            <h5>@item.Product.Name</h5>
+                                        </td>
+                                        <td>@item.Product.Price.ToString("C")</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@(item.Quantity * item.Product.Price) DT</td>
+                                        <td>
+                                            <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                                                <input type="hidden" name="cartItemId" value="@item.Id" />
+                                                <button type="submit">Remove</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                    <a href="#" class="primary-btn cart-btn cart-btn-right">
+                        <span class="icon_loading"></span>
+                        Update Cart
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__continue">
+                    <div class="shoping__discount">
+                        <h5>Discount Codes</h5>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your coupon code">
+                            <button type="submit" class="site-btn">APPLY COUPON</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Cart Total</h5>
+                    <ul>
+                        <li>Subtotal <span>@Model.Carts.Sum(c => c.Items.Sum(i => i.Quantity * i.Product.Price)).ToString("C")</span></li>
+                        <li>Total <span>@Model.Carts.Sum(c => c.Items.Sum(i => i.Quantity * i.Product.Price)).ToString("C")</span></li>
+                    </ul>
+                    <a href="@Url.Action("Index", "Checkout")" class="primary-btn">PROCEED TO CHECKOUT</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->

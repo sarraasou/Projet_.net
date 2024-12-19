@@ -1,0 +1,91 @@
+﻿@model WebApplication2.ViewModels.ProductDetailsViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/img/breadcrumb.jpg")">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Product Details</h2>
+                    <div class="breadcrumb__option">
+                        <a href="@Url.Content("~/")">Home</a>
+                        <a href="@Url.Action("ListProduit", "Home")">Shop</a>
+                        <span>@Model.Product.Name</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="@Url.Content("~/img/product/" + Model.Product.ImageUrl)" alt="@Model.Product.Name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.Product.Name</h3>
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+                    <div class="product__details__price">@Model.Product.Price.ToString("C")</div>
+                    <p>@Model.Product.Description</p>
+                    <div class="product__details__quantity">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" aria-label="Quantity">
+                            </div>
+                        </div>
+                    </div>
+                    <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                        <input type="hidden" name="productId" value="@Model.Product.Id" />
+                        <label for="quantityInput">Quantity:</label>
+                        <input type="number" id="quantityInput" name="quantity" value="1" min="1" required aria-label="Quantity">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+
+
+                    <a href="#" class="heart-icon" aria-label="Add to Wishlist"><span class="icon_heart_alt"></span></a>
+                    <ul>
+                        <li><b>Availability</b> <span>In Stock</span></li>
+                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                        <li><b>Weight</b> <span>0.5 kg</span></li>
+                        <li>
+                            <b>Share on</b>
+                            <div class="share">
+                                <a href="#" aria-label="Share on Facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="#" aria-label="Share on Twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="#" aria-label="Share on Instagram"><i class="fa fa-instagram"></i></a>
+                                <a href="#" aria-label="Share on Pinterest"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.getElementById('quantityInput').value = document.getElementById('quantity').value;
+        document.getElementById('quantity').addEventListener('input', function () {
+            document.getElementById('quantityInput').value = this.value;
+        });
+    </script>
+}
